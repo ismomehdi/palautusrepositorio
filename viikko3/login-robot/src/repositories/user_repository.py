@@ -29,7 +29,7 @@ class UserRepository:
             raise Exception(
                 f"User with username {user.username} already exists"
             )
-
+        
         users.append(user)
 
         self._users = users
