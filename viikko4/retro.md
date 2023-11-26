@@ -18,4 +18,4 @@ during a project or a sprint.
 
 It's a way to express feelings and understand the emotional impact of the work. It encourages open communication in teams.
 
-Both methods are used in retrospectives, which are meetings to reflect on past work, to improve team dynamics and project outcomes.
+Both techniques are used in retrospectives, which are meetings to reflect on past work, to improve team dynamics and project outcomes.
