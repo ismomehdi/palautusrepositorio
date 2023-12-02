@@ -1,53 +1,28 @@
 'use strict';
 
-function getScore(m_score1, m_score2) {
-    var score = "";
-    var tempScore = 0;
-    if (m_score1 === m_score2) {
-        switch (m_score1) {
-            case 0:
-                score = "Love-All";
-                break;
-            case 1:
-                score = "Fifteen-All";
-                break;
-            case 2:
-                score = "Thirty-All";
-                break;
-            default:
-                score = "Deuce";
-                break;
-        }
-    } else if (m_score1 >= 4 || m_score2 >= 4) {
-        var minusResult = m_score1 - m_score2;
-        if (minusResult === 1) {score = "Advantage player1";}
-        else if (minusResult === -1) {score = "Advantage player2";}
-        else if (minusResult >= 2) {score = "Win for player1";}
-        else {score = "Win for player2";}
+function getScoreString(score) {
+    if (score === 0) return 'Love'
+    else if (score === 1) return 'Fifteen'
+    else if (score === 2) return 'Thirty'
+    else if (score === 3) return 'Forty'
+    else return 'Unknown score'
+}
+
+function getScore(playerOneScore, playerTwoScore) {
+    if (playerOneScore === playerTwoScore) {
+        if (playerOneScore === 0) return 'Love-All';
+        else if (playerOneScore === 1) return 'Fifteen-All';
+        else if (playerOneScore === 2) return 'Thirty-All';
+        else return 'Deuce'
+    } else if (playerOneScore >= 4 || playerTwoScore >= 4) {
+        const scoreDifference = Math.abs(playerOneScore - playerTwoScore);
+        const winningPlayer = playerOneScore > playerTwoScore ? 'player1' : 'player2';
+
+        if (scoreDifference === 1) return `Advantage ${winningPlayer}`;
+        else return `Win for ${winningPlayer}`;
     } else {
-        for (var i = 1; i < 3; i++) {
-            if (i === 1) {tempScore = m_score1;}
-            else {
-                score += "-";
-                tempScore = m_score2;
-            }
-            switch (tempScore) {
-                case 0:
-                    score += "Love";
-                    break;
-                case 1:
-                    score += "Fifteen";
-                    break;
-                case 2:
-                    score += "Thirty";
-                    break;
-                case 3:
-                    score += "Forty";
-                    break;
-            }
-        }
+        return `${getScoreString(playerOneScore)}-${getScoreString(playerTwoScore)}`
     }
-    return score;
 }
 
 module.exports = getScore;
