@@ -33,32 +33,37 @@ class Nollaus:
         self.sovelluslogiikka.nollaa()
 
 class Kumoa:
-    def __init__(self, sovelluslogiikka, lue_syote):
+    def __init__(self, sovelluslogiikka, lue_historia):
         self.sovelluslogiikka = sovelluslogiikka
-        self.syote = lue_syote
+        self.historia = lue_historia
 
     def suorita(self):
-        pass
+        self.sovelluslogiikka.aseta_arvo(self.historia())
 
 class Kayttoliittyma:
     def __init__(self, sovelluslogiikka, root):
         self._sovelluslogiikka = sovelluslogiikka
         self._root = root
+        self.historia = 0
 
         self._komennot = {
             Komento.SUMMA: Summa(sovelluslogiikka, self._lue_syote),
             Komento.EROTUS: Erotus(sovelluslogiikka, self._lue_syote),
             Komento.NOLLAUS: Nollaus(sovelluslogiikka, self._lue_syote),
-            Komento.KUMOA: Kumoa(sovelluslogiikka, self._lue_syote) # ei ehkä tarvita täällä...
+            Komento.KUMOA: Kumoa(sovelluslogiikka, self._lue_historia) # ei ehkä tarvita täällä...
         }
 
     def _lue_syote(self):
         arvo = 0
         try:
             arvo = int(self._syote_kentta.get())
+            self.historia = int(self._sovelluslogiikka.arvo())
         except Exception:
             pass
         return arvo
+    
+    def _lue_historia(self):
+        return self.historia
 
     def kaynnista(self):
         self._arvo_var = StringVar()
