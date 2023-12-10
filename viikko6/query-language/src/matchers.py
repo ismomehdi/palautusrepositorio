@@ -21,7 +21,7 @@ class All:
     def __init__(self):
         pass
 
-    def test(self, player):
+    def test(self, player=None):
         return True
 
 class Not:
@@ -63,3 +63,25 @@ class Or:
                 return True
         
         return False
+    
+class QueryBuilder:
+    def __init__(self, query=All()):
+        self.query = query
+
+    def build(self):
+        return self.query
+
+    def playsIn(self, team):
+        return QueryBuilder(And(self.query, PlaysIn(team)))
+
+    def hasAtLeast(self, value, attr):
+        return QueryBuilder(And(self.query, HasAtLeast(value, attr)))
+
+    def hasFewerThan(self, value, attr):
+        return QueryBuilder(And(self.query, HasFewerThan(value, attr)))
+
+    def oneOf(self, *queries):
+        if isinstance(self.query, All):
+            return QueryBuilder(Or(*queries))
+        else:
+            return QueryBuilder(Or(self.query, *queries))
